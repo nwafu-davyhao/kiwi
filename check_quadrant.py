@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 def check_quadrant(world_coordinates, idx, quadrants):
-    # a b c 是相机的偏移量
+    # a b c 是相机相对TCP工具的偏移量，都是正值
     a = 32.5
     b = 31.6
     c = 26.7
@@ -57,8 +57,8 @@ def check_quadrant(world_coordinates, idx, quadrants):
 
 def is_within_workspace(x, y, z):
     # 判断是否在球体范围内
-    sphere_center_z = 85
-    sphere_radius = 5000
+    sphere_center_z = 87.45
+    sphere_radius = 850
     if math.sqrt(x**2 + y**2 + (z - sphere_center_z)**2) > sphere_radius:
         return False
     

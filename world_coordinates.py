@@ -14,7 +14,6 @@ def convert_points_to_world_coordinates(points, depth_frame, intrinsics):
     z = depth_values
     x = (points[:, 0] - intrinsics.ppx) * z / intrinsics.fx
     y = (points[:, 1] - intrinsics.ppy) * z / intrinsics.fy
-
     world_points = np.vstack((x, y, z)).T
 
     # # 创建一个新的图和一个三维子图

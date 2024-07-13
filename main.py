@@ -8,15 +8,23 @@ from world_coordinates import convert_points_to_world_coordinates
 from check_quadrant import check_quadrant,filter_coordinates_within_workspace
 from greedy_path import greedy_path_planning, visualize_path
 
+#定义机器人的一些全局变量
+Xaxis_offset=0.4
+Yaxis_offset=0.4
+Zaxis_offset=0
+
+Roll_offset=0
+Pitch_offset=0
+Yaw_offset=0
 
 def main():
     # 移动到初始化位置
     # 定义四个象限的初始化位置
     quadrants = [
-        [0.4, 0.4, 0.2, 0, 0, 1.57]  # 第1象限
-        # [-0.5, 0.5, 0.1, 0, 0, 0],  # 第2象限
-        # [-0.5, -0.5, 0.1, 0, 0, 0], # 第3象限
-        # [0.5, -0.5, 0.1, 0, 0, 0]   # 第4象限
+        [Xaxis_offset, Yaxis_offset, Zaxis_offset, Roll_offset, Pitch_offset, Yaw_offset]  # 第1象限
+        # [-Xaxis_offset, Yaxis_offset, Zaxis_offset, Roll_offset, Pitch_offset, Yaw_offset]  # 第2象限
+        # [-Xaxis_offset, -Yaxis_offset, Zaxis_offset, Roll_offset, Pitch_offset, Yaw_offset]  # 第3象限
+        # [Xaxis_offset, -Yaxis_offset, Zaxis_offset, Roll_offset, Pitch_offset, Yaw_offset]  # 第4象限
     ]
     
     # 遍历四个象限并移动机械臂

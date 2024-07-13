@@ -1,4 +1,5 @@
 import cv2
+import datetime
 import matplotlib.pyplot as plt
 
 onnx_model_path = "best_new.onnx"
@@ -6,6 +7,8 @@ onnx_model_path = "best_new.onnx"
 input_shape = (640, 640)
 net = cv2.dnn.readNetFromONNX(onnx_model_path)
 model_classify = ["Kiwi flower"]
+#用于后面保存文件方便记录一下系统时间
+now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 
 # threshold指的是分数大于30%的才显示
 def recognize(img, threshold=0.3):
@@ -51,20 +54,28 @@ def recognize(img, threshold=0.3):
         label = f'{model_classify[0]}: {scores[i]:.2f}'
         cv2.putText(img, label, (x, y + 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     
-    # 显示并保存带有花朵框和类别的图像
+    # 显示并保存带有花朵框和类别的图像 可视化代码，可以注释
+    # ***************************************************
     flower_img = img.copy()
     plt.figure(figsize=(15, 15))
     plt.imshow(cv2.cvtColor(flower_img, cv2.COLOR_BGR2RGB))
-    plt.savefig('flower.png', dpi=600)
-    plt.axis('off')
+    #plt.savefig('flower.png', dpi=600) 
+    plt.savefig(f"results/DP_{now}.png")
+    plt.axis('on')
     plt.show()
-
+    # ***************************************************
     return points
 
+#在主函数中，图像是按照numpy数组的格式传入的，测试代码中需要使用cv2.imread重新将图像读入转为 NumPy 数组
+
 def main():
-    
-    points = recognize('color_image_1.png', 0.3)
-    # print(points)
+    # 使用cv2.imread来读取图像文件
+    img = cv2.imread('color_image.png')
+    if img is not None:
+        points = recognize(img, 0.3)
+        print(points)
+    else:
+        print("图像读取失败，请检查文件路径是否正确。")
 
 
 if __name__ == "__main__":
