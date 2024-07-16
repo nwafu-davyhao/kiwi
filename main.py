@@ -1,7 +1,7 @@
 
 import numpy as np
 import time
-from move import move_robot_to_position_cartesian, move_robot_to_position_angel,detecting_location
+from move import move_robot_to_position_cartesian, move_robot_to_position_angel,detecting_location,pollination_signal
 from catch_image import capture_and_save
 from onnx_flower import recognize
 from world_coordinates import convert_points_to_world_coordinates
@@ -101,6 +101,7 @@ def main():
             # 将行中的值赋给对应的变量
             x, y, z, roll, pitch, yaw = row
             move_robot_to_position_cartesian(row)
+            pollination_signal()
 
         #第七步：机械臂最终状态**********************************************************************************     
 
