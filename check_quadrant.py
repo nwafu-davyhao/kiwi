@@ -1,22 +1,21 @@
 import numpy as np
 import math
 
-def check_quadrant(world_coordinates, idx, quadrants):
+def check_quadrant(world_coordinates, idx, tcp_pose):
     # a b c 是相机相对TCP工具的偏移量，都是正值
     a = 32.5
     b = 31.6
     c = 26.7
 
-    # 获取 quadrants 列表中的第一个内部列表，并取出第一个元素作为偏移量
-    offset_factors = quadrants[0]  # 这将是一个列表，如 [0.4, 0.4, 0.2, 0, 0, 1.57]
-    offset_x_factor = offset_factors[0]
-    offset_y_factor = offset_factors[1]
-    offset_z_factor = offset_factors[2]
+    # 获取 tcp_pose 列表中的第一个内部列表，并取出第一个元素作为偏移量
+    offset_x_factor = tcp_pose[0]
+    offset_y_factor = tcp_pose[1]
+    offset_z_factor = tcp_pose[2]
 
     # 应用偏移量
-    offset_x = offset_x_factor * 1000 - a
-    offset_y = offset_y_factor * 1000 - b
-    offset_z = offset_z_factor * 1000 - c
+    offset_x = offset_x_factor - a
+    offset_y = offset_y_factor - b
+    offset_z = offset_z_factor - c
 
     world_coordinates[:, 0] += offset_x
     world_coordinates[:, 1] += offset_y
@@ -58,7 +57,7 @@ def check_quadrant(world_coordinates, idx, quadrants):
 def is_within_workspace(x, y, z):
     # 判断是否在球体范围内
     sphere_center_z = 87.45
-    sphere_radius = 850
+    sphere_radius = 950
     if math.sqrt(x**2 + y**2 + (z - sphere_center_z)**2) > sphere_radius:
         return False
     

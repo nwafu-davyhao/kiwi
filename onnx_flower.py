@@ -60,7 +60,7 @@ def recognize(img, threshold=0.3):
     plt.figure(figsize=(15, 15))
     plt.imshow(cv2.cvtColor(flower_img, cv2.COLOR_BGR2RGB))
     #plt.savefig('flower.png', dpi=600) 
-    plt.savefig(f"results/DP_{now}.png")
+    plt.savefig(f"results/OX_{now}.png")
     plt.axis('on')
     plt.show()
     # ***************************************************
