@@ -39,12 +39,15 @@ def main():
     #机械臂来到初始位置
     move_robot_to_position_angel(Start_angel)
 
-    # 遍历四个象限并移动机械臂
+                                #↑↑↑↑↑↑机械臂初始化程序↑↑↑↑
+#***********************************************************************************************************************************
     for idx, tcp_pose in enumerate(quadrants, start=1):    
         move_robot_to_position_angel(quadrants_temp[idx-1])
-        print(f"移动到第{idx}象限过渡位置{quadrants_temp[idx-1]}")  
+        print(f"移动到第{idx}象限过渡位置{quadrants_temp[idx-1]}") 
+
         move_robot_to_position_cartesian(tcp_pose)
         print(f"移动到第{idx}象限: {tcp_pose}")
+        
         time.sleep(1)  # 等待机械臂移动完成，具体时间可根据实际情况调整  
 
 
