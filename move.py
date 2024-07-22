@@ -12,8 +12,8 @@ rtde_c = rtde_control.RTDEControlInterface(robot_ip)
 rtde_r = rtde_receive.RTDEReceiveInterface(robot_ip)
 rtde_io_ = rtde_io.RTDEIOInterface(robot_ip)
 # 设置速度和加速度
-speed = 0.5  # 工具速度，单位：米/秒  极限3.14
-acceleration = 0.3  # 工具加速度，单位：米/秒²   极限40
+speed = 1  # 工具速度，单位：米/秒  极限3.14
+acceleration = 2  # 工具加速度，单位：米/秒²   极限40
 
 # 转换角度为弧度
 def degrees_to_radians(degrees):
