@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 onnx_model_path = "yolov8s.onnx"
 # onnx_model_path = "yoloV8_tiny.onnx"  #第一代
+# onnx_model_path = "yolov8l.onnx"  #大体量模型
 input_shape = (640, 640)
 net = cv2.dnn.readNetFromONNX(onnx_model_path)
 model_classify = ["Kiwi flower"]
@@ -63,8 +64,12 @@ def recognize(img, threshold=0.3):
     plt.savefig(f"results/OX_{now}.png")
     plt.axis('on')
     plt.show()
+    while True:
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+           cv2.destroyAllWindows()
+        return points
     # ***************************************************
-    return points
+
 
 #在主函数中，图像是按照numpy数组的格式传入的，测试代码中需要使用cv2.imread重新将图像读入转为 NumPy 数组
 

@@ -1,4 +1,5 @@
 import numpy as np
+import cv2
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -85,6 +86,9 @@ def visualize_path(path):
     # 显示图形
     plt.show()
     plt.savefig('3d_greedy_path_planning.png', dpi=600)
+    # while True:
+    #     if cv2.waitKey(1) & 0xFF == ord('q'):
+    #     cv2.destroyAllWindows()
 
 # 调用可视化函数
 # visualize_path(planned_path)
