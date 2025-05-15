@@ -2,9 +2,10 @@ import cv2
 import datetime
 import matplotlib.pyplot as plt
 
-onnx_model_path = "yolov8s.onnx"
-# onnx_model_path = "yoloV8_tiny.onnx"  #第一代
-# onnx_model_path = "yolov8l.onnx"  #大体量模型
+onnx_model_path = "best.onnx" #2025年5月 真花模型
+# onnx_model_path = "yolov8s.onnx"   #常用假花模型
+# onnx_model_path = "yoloV8_tiny.onnx"  #第一代假花模型
+# onnx_model_path = "yolov8l.onnx"  #大体量模型假花模型
 input_shape = (640, 640)
 net = cv2.dnn.readNetFromONNX(onnx_model_path)
 model_classify = ["Kiwi flower"]
@@ -57,20 +58,29 @@ def recognize(img, threshold=0.3):
     
     # 显示并保存带有花朵框和类别的图像 可视化代码，可以注释
     # ***************************************************
+    # flower_img = img.copy()
+    # plt.figure(figsize=(15, 15))
+    # plt.imshow(cv2.cvtColor(flower_img, cv2.COLOR_BGR2RGB))
+    # #plt.savefig('flower.png', dpi=600) 
+    # plt.savefig(f"results/OX_{now}.png")
+    # plt.axis('on')
+    # plt.show()
+    # while True:
+    #     if cv2.waitKey(1) & 0xFF == ord('q'):
+    #        cv2.destroyAllWindows()
+    #     return points
+    # ***************************************************
     flower_img = img.copy()
     plt.figure(figsize=(15, 15))
     plt.imshow(cv2.cvtColor(flower_img, cv2.COLOR_BGR2RGB))
-    #plt.savefig('flower.png', dpi=600) 
-    plt.savefig(f"results/OX_{now}.png")
     plt.axis('on')
-    plt.show()
+    plt.savefig(f"results/OX_{now}.png")
+
+    plt.draw()       # 必须先 draw 才能 pause
+    plt.pause(1)     # 显示图像 1 秒
+    plt.close()      # 关闭窗口
     while True:
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-           cv2.destroyAllWindows()
         return points
-    # ***************************************************
-
-
 #在主函数中，图像是按照numpy数组的格式传入的，测试代码中需要使用cv2.imread重新将图像读入转为 NumPy 数组
 
 def main():

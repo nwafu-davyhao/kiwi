@@ -13,6 +13,18 @@ def capture_and_save():
     config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
     # 启动管道
     pipeline.start(config)
+    #********************锁参数**********************
+        #  锁定彩色相机曝光
+    color_sensor = pipeline.get_active_profile().get_device().query_sensors()[1]
+    color_sensor.set_option(rs.option.enable_auto_exposure, 0)
+    color_sensor.set_option(rs.option.exposure, 50)
+
+        # 锁定深度相机曝光（IR Sensor）
+    depth_sensor = pipeline.get_active_profile().get_device().first_depth_sensor()
+    depth_sensor.set_option(rs.option.enable_auto_exposure, 0)  # 关闭自动曝光
+    depth_sensor.set_option(rs.option.exposure, 4)  # 设置固定曝光5000
+    depth_sensor.set_option(rs.option.laser_power, 300)  # 调整激光功率 200
+#********************锁参数**********************
     # 获取相机内参
     profile = pipeline.get_active_profile()
     depth_intrinsics = profile.get_stream(rs.stream.depth).as_video_stream_profile().get_intrinsics()
@@ -34,9 +46,9 @@ def capture_and_save():
         color_image = np.asanyarray(color_frame.get_data())
         depth_image_unit16 = depth_image.astype(np.uint16) #把深度图像存储为16位，方便后续处理
         cv2.imwrite('color_image.png', color_image)
-        cv2.imwrite(f"results/CL_{now}.png",color_image)
+        cv2.imwrite(f"raw_date/CL_{now}.png",color_image)   #保存彩色图像
         cv2.imwrite('depth_image.png', depth_image_unit16)  # 保存 16 位深度图
-        cv2.imwrite(f"results/DP_{now}.png", depth_image_unit16)  # 保存 16 位深度图
+        cv2.imwrite(f"raw_date/depth_{now}.png", depth_image_unit16)
         # 断开相机数据流
         pipeline.stop()
          #传回两张图片和相机内参
@@ -59,6 +71,20 @@ def main():
 
     try:
         pipeline.start(config) 
+
+#********************锁参数**********************
+         # 锁定彩色相机曝光
+        color_sensor = pipeline.get_active_profile().get_device().query_sensors()[1]
+        color_sensor.set_option(rs.option.enable_auto_exposure, 0)
+        color_sensor.set_option(rs.option.exposure, 100)
+
+        # 锁定深度相机曝光（IR Sensor）
+        depth_sensor = pipeline.get_active_profile().get_device().first_depth_sensor()
+        depth_sensor.set_option(rs.option.enable_auto_exposure, 0)  # 关闭自动曝光
+        depth_sensor.set_option(rs.option.exposure, 5000)  # 设置固定曝光5000
+        depth_sensor.set_option(rs.option.laser_power, 300)  # 调整激光功率 200
+#********************锁参数**********************
+
         align_to = rs.stream.color
         align = rs.align(align_to)
         

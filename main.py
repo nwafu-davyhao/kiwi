@@ -77,10 +77,20 @@ def main():
 
         # # # 第五步：路径规划*********************************************************************************
 
-        planned_path = greedy_path_planning(filtered_quadrant_coords)
-        print("规划的路径:", planned_path)
-        # 调用可视化函数
-        visualize_path(planned_path)
+        # planned_path = greedy_path_planning(filtered_quadrant_coords)
+        # print("规划的路径:", planned_path)
+        # # 调用可视化函数
+        # visualize_path(planned_path)
+        
+        if len(filtered_quadrant_coords) == 0:
+         print("无可用目标点，跳过路径规划")
+         planned_path = np.empty((0, 3))  # 空的二维数组，形状为(0,3)
+        else:
+         planned_path = greedy_path_planning(filtered_quadrant_coords)
+         print("规划的路径:", planned_path)
+         # 可视化路径
+         visualize_path(planned_path)
+
 
         # # # 第六步：机械臂移动**********************************************************************************
         # 提取 tcp_pose 数组的后三个值

@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+from datetime import datetime
 # 贪心算法规划路径
 def greedy_path_planning(points):
     # 初始化路径，包含起始点
@@ -21,39 +21,6 @@ def greedy_path_planning(points):
         remaining_points = np.delete(remaining_points, nearest_index, axis=0)
     
     return path
-
-# # 假设 filtered_quadrant_coords 是一个包含三维坐标点的 NumPy 数组
-# filtered_quadrant_coords = np.array([
-#     [131.75875928, 761.0520078, 759.3],
-#     [353.00760577, 770.91875541, 830.3],
-#     [370.52463912, 723.75751177, 830.3]
-# ])
-
-# # 这是提供的 quadrants 数组
-# quadrants = np.array([
-#     [0.4, 0.4, 0.2, 0, 0, 1.57]
-# ])
-
-# # 这是提供的 filtered_quadrant_coords 数组
-# filtered_quadrant_coords = np.array([
-#     [131.75875928, 761.0520078, 759.3],
-#     [353.00760577, 770.91875541, 830.3],
-#     [370.52463912, 723.75751177, 830.3]
-# ])
-
-# # 提取 quadrants 数组的后三个值
-# additional_columns = quadrants[:, 3:]  # 取后三个值
-
-# # 将 additional_columns 重复以匹配 filtered_quadrant_coords 的行数
-# additional_columns_repeated = additional_columns.repeat(filtered_quadrant_coords.shape[0], axis=0)
-
-# # 将 additional_columns_repeated 追加到 filtered_quadrant_coords 的每一行
-# extended_coords = np.hstack((filtered_quadrant_coords, additional_columns_repeated))
-
-# # 打印结果
-# print(extended_coords)
-
-
 
 def visualize_path(path):
     # 创建一个新的图和三维子图
@@ -83,9 +50,21 @@ def visualize_path(path):
     ax.set_ylim(min(y_coords), max(y_coords))
     ax.set_zlim(min(z_coords), max(z_coords))
 
+    # 获取当前时间字符串
+    now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+    # 保存路径
+    save_path = f"raw_date/PA_{now}.png"
+
+   # 显示图形 1 秒后自动关闭
+    plt.show(block=False)
+    plt.savefig(save_path, dpi=600)
+    plt.pause(1)
+    plt.close()
+
     # 显示图形
-    plt.show()
-    plt.savefig('3d_greedy_path_planning.png', dpi=600)
+    # plt.show()
+    # plt.savefig('3d_greedy_path_planning.png', dpi=600)
     # while True:
     #     if cv2.waitKey(1) & 0xFF == ord('q'):
     #     cv2.destroyAllWindows()

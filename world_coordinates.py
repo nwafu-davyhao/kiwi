@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 # 喷头补偿量
-pollination_distance = 100
+pollination_distance = 250#这里改喷雾距离
 def convert_points_to_world_coordinates(points, depth_frame, intrinsics):
     # 确保 points 是一个 NumPy 数组
     points = np.array(points, dtype=int)  # 确保 points 是整数数组

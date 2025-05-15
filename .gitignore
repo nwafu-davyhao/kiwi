@@ -1,2 +1,4 @@
 yolov8l.onnx
 yolov8s.onnx
+results/
+raw_date/
